@@ -22,14 +22,14 @@ public struct BottomSheetConfiguration {
     /// Value range is 0...1
     public let dismissThreshold: CGFloat
     
-    public init(showPullBar: Bool,
-                tapToDismissEnabled: Bool,
-                panToDismissEnaled: Bool,
-                cornerRadius: CGFloat,
-                overlayColor: UIColor,
-                animationDuration: TimeInterval,
-                dampingRatio: Double,
-                dismissThreshold: CGFloat) {
+    public init(showPullBar: Bool = true,
+                tapToDismissEnabled: Bool = true,
+                panToDismissEnaled: Bool = true,
+                cornerRadius: CGFloat = 16,
+                overlayColor: UIColor = .black.withAlphaComponent(0.3),
+                animationDuration: TimeInterval = 0.5,
+                dampingRatio: Double = 0.9,
+                dismissThreshold: CGFloat = 0.3) {
         self.showPullBar = showPullBar
         self.tapToDismissEnabled = tapToDismissEnabled
         self.panToDismissEnaled = panToDismissEnaled

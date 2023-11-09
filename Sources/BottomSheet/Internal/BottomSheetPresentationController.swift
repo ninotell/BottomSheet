@@ -157,13 +157,12 @@ final class BottomSheetPresentationController: UIPresentationController {
     private func updateTransitionProgress(for translation: CGPoint) {
         guard
             let transitioningDelegate = transitioningDelegate,
-            let presentedView = presentedView,
-            let initialPanPoint = initialPanPoint
+            let presentedView = presentedView
         else {
             return
         }
         
-        let adjustedHeight = presentedView.frame.height - (translation.y - initialPanPoint.y)
+        let adjustedHeight = presentedView.frame.height - translation.y
         let progress = 1 - (adjustedHeight / presentedView.frame.height)
         transitioningDelegate.transition.update(progress)
     }
@@ -192,7 +191,7 @@ final class BottomSheetPresentationController: UIPresentationController {
         }
         switch recognizer.state {
         case .began:
-            initialPanPoint = recognizer.location(in: presentedView)
+            dismiss(interactively: true)
             
         case .changed:
             let translation = recognizer.translation(in: presentedView)
