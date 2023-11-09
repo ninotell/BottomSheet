@@ -88,7 +88,9 @@ final class BottomSheetPresentationController: UIPresentationController {
         super.presentationTransitionWillBegin()
         
         containerView?.addSubview(overlayView)
-        presentedView?.addSubview(pullBarView)
+        if configuration.showPullBar {
+            presentedView?.addSubview(pullBarView)
+        }
         
         overlayView.alpha = 0
         
@@ -183,9 +185,6 @@ final class BottomSheetPresentationController: UIPresentationController {
             return
         }
         switch recognizer.state {
-        case .began:
-            dismiss(interactively: true)
-            
         case .changed:
             let translation = recognizer.translation(in: presentedView)
             updateTransitionProgress(for: translation)
@@ -193,7 +192,7 @@ final class BottomSheetPresentationController: UIPresentationController {
         case .ended, .cancelled, .failed:
             handleEndedInteraction()
             
-        case .possible:
+        case .began, .possible:
             break
             
         @unknown default:
