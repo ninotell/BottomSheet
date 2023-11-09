@@ -39,6 +39,8 @@ final class BottomSheetPresentationController: UIPresentationController {
         configuration.dismissThreshold
     }
     
+    private var initialPanPoint: CGPoint?
+    
     private let configuration: BottomSheetConfiguration
     
     // MARK: Init
@@ -155,11 +157,13 @@ final class BottomSheetPresentationController: UIPresentationController {
     private func updateTransitionProgress(for translation: CGPoint) {
         guard
             let transitioningDelegate = transitioningDelegate,
-            let presentedView = presentedView
+            let presentedView = presentedView,
+            let initialPanPoint = initialPanPoint
         else {
             return
         }
-        let adjustedHeight = presentedView.frame.height - translation.y
+        
+        let adjustedHeight = presentedView.frame.height - (translation.y - initialPanPoint.y)
         let progress = 1 - (adjustedHeight / presentedView.frame.height)
         transitioningDelegate.transition.update(progress)
     }
@@ -187,7 +191,10 @@ final class BottomSheetPresentationController: UIPresentationController {
             return
         }
         switch recognizer.state {
-        case .began, .changed:
+        case .began:
+            initialPanPoint = recognizer.location(in: presentedView)
+            
+        case .changed:
             let translation = recognizer.translation(in: presentedView)
             updateTransitionProgress(for: translation)
             
