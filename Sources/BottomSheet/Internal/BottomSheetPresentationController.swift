@@ -105,7 +105,9 @@ final class BottomSheetPresentationController: UIPresentationController {
         super.containerViewDidLayoutSubviews()
         
         setupLayout()
-        setupPresentedViewInteraction()
+        if configuration.panToDismissEnaled {
+            setupPresentedViewInteraction()
+        }
     }
     
     override func dismissalTransitionWillBegin() {
@@ -185,14 +187,14 @@ final class BottomSheetPresentationController: UIPresentationController {
             return
         }
         switch recognizer.state {
-        case .changed:
+        case .began, .changed:
             let translation = recognizer.translation(in: presentedView)
             updateTransitionProgress(for: translation)
             
         case .ended, .cancelled, .failed:
             handleEndedInteraction()
             
-        case .began, .possible:
+        case .possible:
             break
             
         @unknown default:
