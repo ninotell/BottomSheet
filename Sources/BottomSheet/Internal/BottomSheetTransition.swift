@@ -33,7 +33,7 @@ final class BottomSheetTransition: UIPercentDrivenInteractiveTransition {
     
     // MARK: Init
     
-    init(configuration: BottomSheetConfiguration = .default) {
+    init(configuration: BottomSheetConfiguration) {
         self.configuration = configuration
         super.init()
     }

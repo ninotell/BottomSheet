@@ -12,7 +12,7 @@ public final class BottomSheetTransitioningDelegate: NSObject {
     
     // MARK: Init
     
-    public init(configuration: BottomSheetConfiguration) {
+    public init(configuration: BottomSheetConfiguration = .default) {
         self.configuration = configuration
         self.transition = BottomSheetTransition(configuration: configuration)
     }
